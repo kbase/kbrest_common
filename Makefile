@@ -4,9 +4,7 @@ DEPLOY_RUNTIME ?= /kb/runtime
 TARGET ?= /kb/deployment
 include $(TOOLS_DIR)/Makefile.common
 
-default:
-	$(BIN_PERL)
-	$(BIN_PYTHON)
+default: $(BIN_PERL) $(BIN_PYTHON)
 	cp template/communities.template $(TOP_DIR)/template/.
 
 all: deploy
