@@ -12,9 +12,13 @@ all: deploy
 
 deploy: deploy-client
 
-deploy-client: deploy-scripts
+deploy-client:
+	mkdir -p $(SERVICE_DIR)
+	mkdir -p $(SERVICE_DIR)/bin
 	mkdir -p $(SERVICE_DIR)/template
 	cp template/communities.template $(SERVICE_DIR)/template/.
+	cp scripts/* $(SERVICE_DIR)/bin/.
+	chmod +x $(SERVICE_DIR)/bin/*
 	@echo "client tools deployed"
 
 test:
