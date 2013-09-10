@@ -5,14 +5,15 @@ TARGET ?= /kb/deployment
 include $(TOOLS_DIR)/Makefile.common
 
 default:
-	for x in `ls scripts`; do cp scripts/$x $(TOP_DIR)/bin/$x; chmod +x $(TOP_DIR)/bin/$x; done
+	$(BIN_PERL)
+	$(BIN_PYTHON)
 	cp template/communities.template $(TOP_DIR)/template/.
 
 all: deploy
 
 deploy: deploy-client
 
-deploy-client:
+deploy-client: deploy-scripts
 	mkdir -p $(SERVICE_DIR)
 	mkdir -p $(SERVICE_DIR)/bin
 	mkdir -p $(SERVICE_DIR)/template
