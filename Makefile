@@ -4,12 +4,14 @@ DEPLOY_RUNTIME ?= /kb/runtime
 TARGET ?= /kb/deployment
 include $(TOOLS_DIR)/Makefile.common
 
-default: $(BIN_PERL) $(BIN_PYTHON)
+default: bin
 	cp template/communities.template $(TOP_DIR)/template/.
 
 all: deploy
 
 deploy: deploy-client
+
+bin: $(BIN_PERL) $(BIN_PYTHON)
 
 deploy-client: deploy-scripts
 	mkdir -p $(SERVICE_DIR)
