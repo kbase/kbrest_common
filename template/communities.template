@@ -9,7 +9,7 @@ use JSON;
 use Bio::KBase::IDServer::Client;
 
 sub help {
-  my $text = qq~
+  my $helptext = qq~
 NAME
     ##resource## -- ##description##
 
@@ -39,10 +39,11 @@ AUTHORS
     ##authors##
 
 ~;
-  print $text;
+  print $helptext;
 }
 
 my $HOST      = '##host##/##item##';
+my $text      = '';
 my $user      = '';
 my $pass      = '';
 my $token     = '';
@@ -62,7 +63,8 @@ GetOptions ( 'user=s' => \$user,
              'webkey=s' => \$webkey,
              'limit=s' => \$limit,
              'offset' => \$offset,
-	     'id=s' => \$id ##getopts##);
+             'text' => \$text,
+	         'id=s' => \$id ##getopts##);
 
 if ($help) {
   &help();
