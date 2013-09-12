@@ -1,5 +1,6 @@
 use strict;
 use warnings;
+use Config::Simple;
 
 use Getopt::Long;
 
@@ -42,7 +43,9 @@ AUTHORS
   print $helptext;
 }
 
-my $HOST      = '##host##/##item##';
+my $cfg = new Config::Simple($ENV{'KB_TOP'}.'/deployment.cfg');
+
+my $HOST      = $cfg->param('communities_api.host').'/##item##';
 my $text      = '';
 my $user      = '';
 my $pass      = '';
