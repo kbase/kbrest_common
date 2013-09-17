@@ -11,16 +11,24 @@ sub usage {
 }
 
 my $template = '';
-my $outdir = '';
-my $config = '';
+my $outdir   = '';
+my $config   = '';
+my $help     = 0;
 
 GetOptions ( 'template=s' => \$template,
-	     'config=s' => \$config,
-             'outdir=s' => \$outdir );
+	         'config=s' => \$config,
+             'outdir=s' => \$outdir,
+             'help!' => \$help );
+
+if ($help) {
+    &usage();
+    exit 0;
+}
 
 unless ($template && $config) {
-  &usage();
-  exit 0;
+    print "missing required paramater\n";
+    &usage();
+    exit 1;
 }
 
 my $t = [];

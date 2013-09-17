@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+
 use strict;
 use warnings;
 
@@ -9,23 +10,30 @@ use Data::Dumper;
 
 # usage message
 sub usage {
-  print "definition2typedef - creates a typedef document that can be compiled by the typespec compiler from a json structure\n";
-  print "usage: definition2typedef -json <json input file> -typedef <typedef output file> [-verbose <print status messages> -service <overwrite service name>]\n\n";
-  exit;
+  print "definition2typedef.pl >>> creates a typedef document that can be compiled by the typespec compiler from a json structure\n";
+  print "definition2typedef.pl -json <json input file> -typedef <typedef output file> [-verbose <print status messages> -service <overwrite service name>]\n";
 }
 
 # initialize some variables
-my ($file, $typedef, $verbose, $struct, $service) ;
+my ($file, $typedef, $verbose, $struct, $service);
+my $help = 0;
 
 # get input parameters
 GetOptions ( 'json=s' => \$file,
-	     'typedef=s' => \$typedef,
-	     'verbose=s' => \$verbose,
-	     'service=s' => \$service );
+	        'typedef=s' => \$typedef,
+	        'verbose=s' => \$verbose,
+	        'service=s' => \$service,
+	        'help!' => \$help );
 
-# print usage if called with invalid or no parameters
+if ($help) {
+    &usage();
+    exit 0;
+}
+
 unless ($file && $typedef) {
-  usage();
+    print "missing required paramater\n";
+    &usage();
+    exit 1;
 }
 
 # initialize JSON OO-interface

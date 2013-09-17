@@ -19,14 +19,22 @@ sub usage {
 my $url       = '';
 my $site_name = '';
 my $outfile   = '';
+my $help      = 0;
 
 GetOptions ( 'url=s' => \$url,
              'site_name=s' => \$site_name,
-	     'outfile=s' => \$outfile );
+	         'outfile=s' => \$outfile,
+	         'help!' => \$help );
+
+if ($help) {
+    &usage();
+    exit 0;
+}
 
 unless ($url and $site_name and $outfile) {
-  &usage();
-  exit 0;
+    print "missing required paramater\n";
+    &usage();
+    exit 1;
 }
 
 # initialize json object and user agent

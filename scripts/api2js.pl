@@ -18,13 +18,21 @@ sub usage {
 # read in parameters
 my $url     = '';
 my $outfile = '';
+my $help    = 0;
 
 GetOptions ( 'url=s' => \$url,
-	     'outfile=s' => \$outfile );
+	         'outfile=s' => \$outfile,
+	         'help!' => \$help );
+
+if ($help) {
+    &usage();
+    exit 0;
+}
 
 unless ($url and $outfile) {
-  &usage();
-  exit 0;
+    print "missing required paramater\n";
+    &usage();
+    exit 1;
 }
 
 my $json = new JSON;
