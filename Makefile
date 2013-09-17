@@ -27,12 +27,12 @@ test: test-scripts
 test-scripts:
 	@echo "testing scripts ..."
 	for t in $(SCRIPTS); do \
-		echo $$t; \
-		$(DEPLOY_RUNTIME)/bin/perl $$t -h; \
+		echo -n "testing $$t ... "; \
+		$(DEPLOY_RUNTIME)/bin/perl $$t -h > /dev/null; \
 		if [ $$? -eq 0 ]; then \
-			echo $$t passed tests; \
-		else; \
-			echo $$t failed tests; \
+			echo "passed"; \
+		else \
+			echo "failed"; \
 		fi \
 	done
 
