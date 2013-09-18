@@ -74,10 +74,10 @@ if (open(FH, "<$config")) {
 	my $optionlist = "";
 	foreach my $o (@opts) {
 	  my ($name, $short, $long) = split(/\^/,$o);
-	  $optionvars .= 'my $'.$s." = undef;\n";
-	  $getopts .= ",\n\t'$s=s' => \\\$$s";
+	  $optionvars .= 'my $'.$name." = undef;\n";
+	  $getopts .= ",\n\t'$name=s' => \\\$$name";
 	  unless ($name == 'id') {
-	    $additionals .= "\nif (\$$s) {\n    \$additionals .= \"&$s=\$$s\";\n}";
+	    $additionals .= "\nif (\$$name) {\n    \$additionals .= \"&$name=\$$name\";\n}";
 	  }
 	  $optionlist .= ", --$name".($short ? " <$short>" : "");
 	  $detailed .= "\t$name - $long\n";
