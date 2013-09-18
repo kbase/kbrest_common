@@ -85,7 +85,7 @@ if (open(FH, "<$config")) {
 	$currt =~ s/##optionvars##/$optionvars/g;
 	$currt =~ s/##getopts##/$getopts/g;
 	$currt =~ s/##additionals##/$additionals/g;
-	$currt =~ s/##options detailed##/$detailed/g;
+	$currt =~ s/##optionsdetailed##/$detailed/g;
 	$currt =~ s/##optionlist##/$optionlist/g;
       } else {
 	my $v = $data->{$key}->{$k};
