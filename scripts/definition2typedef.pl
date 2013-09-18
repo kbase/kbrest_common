@@ -262,7 +262,8 @@ foreach my $resource (@{$struct->{resources}}){
 
     # check if the function has parameters
     if (scalar(@parameters)) {
-      $definition_string .= "\ttypedef structure {\n";
+      my $curr_func = "\ttypedef structure {\n";
+      my $curr_doc = "/* A set of parameters the $func_name method. This is a mapping of key value pairs, defined as follows:\n";
       foreach my $pm (@parameters) {
 	my $p = $pm->[0];
 	my $podp = $p;
@@ -270,21 +271,23 @@ foreach my $resource (@{$struct->{resources}}){
 	$pod_string .= "=item * $podp\n\n";
 	if (ref($pm->[1]) eq 'ARRAY') {
 	  $pod_string .= "This parameter value can be chosen from the following (the first being default):\n\n";
-	  $definition_string .= "/*\n\nThis parameter value can be chosen from the following (the first being default):\n\n";
+	  $curr_doc .= "$podp\n\nThis parameter value can be chosen from the following (the first being default):\n\n";
 	  foreach my $cvitem (@{$pm->[1]}) {
 	    $pod_string .= " ".$cvitem->[0]." - ".$cvitem->[1]."\n";
-	    $definition_string .= "\t".$cvitem->[0]." - ".$cvitem->[1]."\n";
+	    $curr_doc .= "\t".$cvitem->[0]." - ".$cvitem->[1]."\n";
 	  }
 	  $pod_string .= "\n";
-	  $definition_string .= "\n*/\n";
 	} else {
 	  $pod_string .= $pm->[1]."\n\n";
-	  $definition_string .= "/*\n\n\t".$pm->[1]."\n\n*/\n";
+	  $curr_doc .= "$podp\n\n\t".$pm->[1]."\n";
 	}
-	$definition_string .= "\t\t$p\n";
+	$curr_func .= "\t\t$p\n";
       }
       $pod_string .= "\n=back\n\n";
-      $definition_string .= "\t} ".$func_name."Params;\n";
+      $curr_func .= "\t} ".$func_name."Params;\n";
+
+      $curr_doc .= "*/";
+      $definition_string .= $curr_doc."\n".$curr_func;
       
       # create function spec
       $func .= $func_name_uc."(".$func_name."Params) returns (";
