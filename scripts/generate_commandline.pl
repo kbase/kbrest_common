@@ -64,7 +64,7 @@ if (open(FH, "<$config")) {
   foreach my $key (keys(%$data)) {
     next if ($key eq "default");
     my $currt = $t;
-    unless (exists($data->{options})) {
+    unless (exists($data->{$key}->{options})) {
       $currt =~ s/##optionsdetailed##//g;
     }
     foreach my $k (keys(%{$data->{$key}})) {
