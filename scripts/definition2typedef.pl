@@ -263,7 +263,7 @@ foreach my $resource (@{$struct->{resources}}){
     # check if the function has parameters
     if (scalar(@parameters)) {
       my $curr_func = "\ttypedef structure {\n";
-      my $curr_doc = "/* A set of parameters the $func_name method. This is a mapping of key value pairs, defined as follows:\n";
+      my $curr_doc = "\n/* A set of parameters the $func_name method. This is a mapping of key value pairs, defined as follows:\n\n";
       foreach my $pm (@parameters) {
 	my $p = $pm->[0];
 	my $podp = $p;
@@ -279,7 +279,7 @@ foreach my $resource (@{$struct->{resources}}){
 	  $pod_string .= "\n";
 	} else {
 	  $pod_string .= $pm->[1]."\n\n";
-	  $curr_doc .= "$podp\n\n\t".$pm->[1]."\n";
+	  $curr_doc .= "$podp\n\n\t".$pm->[1]."\n\n";
 	}
 	$curr_func .= "\t\t$p\n";
       }
