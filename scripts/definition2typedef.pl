@@ -263,7 +263,7 @@ foreach my $resource (@{$struct->{resources}}){
     # check if the function has parameters
     if (scalar(@parameters)) {
       my $curr_func = "\ttypedef structure {\n";
-      my $curr_doc = "\n/* A set of parameters the $func_name method. This is a mapping of key value pairs, defined as follows:\n\n";
+      my $curr_doc = "\n/*\nA set of parameters the $func_name method. This is a mapping of key value pairs, defined as follows:\n\n";
       foreach my $pm (@parameters) {
 	my $p = $pm->[0];
 	my $podp = $p;
@@ -277,6 +277,7 @@ foreach my $resource (@{$struct->{resources}}){
 	    $curr_doc .= "\t".$cvitem->[0]." - ".$cvitem->[1]."\n";
 	  }
 	  $pod_string .= "\n";
+	  $curr_doc .= "\n";
 	} else {
 	  $pod_string .= $pm->[1]."\n\n";
 	  $curr_doc .= "$podp\n\n\t".$pm->[1]."\n\n";
@@ -309,7 +310,7 @@ foreach my $resource (@{$struct->{resources}}){
     
     # create typedef for the return object
     my $curr_def = "\ttypedef structure {\n";
-    my $curr_doc = "\n/* Method $retname\n";
+    my $curr_doc = "\n/*\nMethod $retname\n";
     $pod_string .= "=head3 Return Attributes\n\n=over4\n\n";
     foreach my $att_tuple (@atts) {
       my $att = $att_tuple->[0];
