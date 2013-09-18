@@ -16,7 +16,7 @@ my $config   = '';
 my $help     = 0;
 
 GetOptions ( 'template=s' => \$template,
-	         'config=s' => \$config,
+	     'config=s' => \$config,
              'outdir=s' => \$outdir,
              'help!' => \$help );
 
@@ -52,9 +52,9 @@ if (open(FH, "<$config")) {
     my ($key, $val) = split /\t/;
     next unless ($key && $val);
     next if ($key =~ /^#/);
-    if ($key eq 'resource') {
+    if ($key eq 'filename') {
       $curr = $val;
-      $data->{$curr} = { resource => $val };
+      $data->{$curr} = { filename => $val };
     } else {
       $data->{$curr}->{$key} = $val;
     }
@@ -65,19 +65,28 @@ if (open(FH, "<$config")) {
     next if ($key eq "default");
     my $currt = $t;
     foreach my $k (keys(%{$data->{$key}})) {
-      if ($k eq 'specialops') {
-	my @spec = split(/,/, $data->{$key}->{$k});
+      if ($k eq 'options') {
+	my @opts = split(/\|/, $data->{$key}->{$k});
 	my $optionvars = "";
 	my $getopts = "";
 	my $additionals = "";
-	foreach my $s (@spec) {
+	my $detailed = "";
+	my $optionlist = "";
+	foreach my $o (@opts) {
+	  my ($name, $short, $long) = split(/\^/,$o);
 	  $optionvars .= 'my $'.$s." = undef;\n";
 	  $getopts .= ",\n\t'$s=s' => \\\$$s";
-	  $additionals .= "\nif (\$$s) {\n    \$additionals .= \"&$s=\$$s\";\n}";
+	  unless ($name == 'id') {
+	    $additionals .= "\nif (\$$s) {\n    \$additionals .= \"&$s=\$$s\";\n}";
+	  }
+	  $optionlist .= ", --$name".($short ? " <$short>" : "");
+	  $detailed .= "\t$name - $long\n";
 	}
 	$currt =~ s/##optionvars##/$optionvars/g;
 	$currt =~ s/##getopts##/$getopts/g;
 	$currt =~ s/##additionals##/$additionals/g;
+	$currt =~ s/##options detailed##/$detailed/g;
+	$currt =~ s/##optionlist##/$optionlist/g;
       } else {
 	my $v = $data->{$key}->{$k};
 	$currt =~ s/##$k##/$v/g;
