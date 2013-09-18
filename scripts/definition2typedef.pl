@@ -308,15 +308,18 @@ foreach my $resource (@{$struct->{resources}}){
     push(@$funcs, $func);
     
     # create typedef for the return object
-    $definition_string .= "\ttypedef structure {\n";
+    my $curr_def = "\ttypedef structure {\n";
+    my $curr_doc = "\n/* Method $retname\n";
     $pod_string .= "=head3 Return Attributes\n\n=over4\n\n";
     foreach my $att_tuple (@atts) {
       my $att = $att_tuple->[0];
       $pod_string .= "=item * $att\n\n".$att_tuple->[1]."\n\n";
-      $definition_string .= "/*\n\t".$att_tuple->[1]."\n*/\n";
-      $definition_string .= "\t\t$att;\n";
+      $curr_doc .= "\n\t".$att_tuple->[1]."\n";
+      $curr_def .= "\t\t$att;\n";
     }
-    $definition_string .= "\t} $retname;\n";
+    $curr_def .= "\t} $retname;\n";
+    $curr_doc .= "\n*/\n";
+    $definition_string .= $curr_doc."\n".$curr_def;
   }
   $pod_string .= "=cut\n\n";
 }
