@@ -65,7 +65,7 @@ GetOptions ( 'user=s' => \$user,
              'help' => \$help,
              'webkey=s' => \$webkey,
              'limit=s' => \$limit,
-             'offset' => \$offset,
+             'offset=s' => \$offset,
              'text=s' => \$text,
 	         'id=s' => \$id ##getopts##);
 
@@ -117,7 +117,7 @@ if ($id) {
     $last = "/$text";
 }
 
-my $url = $HOST.$subresource.$last."?verbosity=$verbosity&limit=$limit&offset=$offset".$additionals;
+my $url = $HOST.$subresource.$last."?verbosity=$verbosity".$additionals;
 if ($webkey) {
   $url .= "&webkey=".$webkey;
 }
