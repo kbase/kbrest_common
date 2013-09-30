@@ -77,7 +77,7 @@ if (open(FH, "<$config")) {
 	my $optionlist = "";
 	foreach my $o (@opts) {
 	  my ($name, $short, $long) = split(/\^/,$o);
-	  unless ($name eq 'id') {
+	  if (($name ne 'id') && ($name ne 'text')) {
 	    $additionals .= "\nif (\$$name) {\n    \$additionals .= \"&$name=\$$name\";\n}";
 	    unless ($name eq 'offset' || $name eq 'limit') {
 	      $optionvars .= 'my $'.$name." = undef;\n";
