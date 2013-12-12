@@ -273,8 +273,13 @@ foreach my $resource (@{$struct->{resources}}){
 	  $pod_string .= "This parameter value can be chosen from the following (the first being default):\n\n";
 	  $curr_doc .= "$podp\n\nThis parameter value can be chosen from the following (the first being default):\n\n";
 	  foreach my $cvitem (@{$pm->[1]}) {
-	    $pod_string .= " ".$cvitem->[0]." - ".$cvitem->[1]."\n";
-	    $curr_doc .= "\t".$cvitem->[0]." - ".$cvitem->[1]."\n";
+	    if (ref($cvitem)) {
+	      $pod_string .= " ".$cvitem->[0]." - ".$cvitem->[1]."\n";
+	      $curr_doc .= "\t".$cvitem->[0]." - ".$cvitem->[1]."\n";
+	    } else {
+	      $pod_string .= " ".$cvitem."\n";
+	      $curr_doc .= "\t".$cvitem."\n";
+	    }
 	  }
 	  $pod_string .= "\n";
 	  $curr_doc .= "\n";

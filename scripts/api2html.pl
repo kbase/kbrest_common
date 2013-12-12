@@ -112,7 +112,11 @@ foreach my $res (sort { $a->{name} cmp $b->{name} } @{$structure->{resources}}) 
 	                    $html .= ")</li><p>";
 	                    $html .= "This parameter value can be chosen from the following (the first being default):</p><ul style='list-style: none;'>";
 	                    foreach my $cvitem (@{$pm->[1]}) {
+			      if (ref($cvitem)) {
 	                        $html .= "<li><b>".$cvitem->[0]."</b> - ".$cvitem->[1]."</li>";
+			      } else {
+				$html .= "<li><b>".$cvitem."</b></li>";
+			      }
 	                    }
 	                    $html .= "</ul><br>";
 	                }
