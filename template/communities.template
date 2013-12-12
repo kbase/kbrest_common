@@ -119,7 +119,7 @@ if ($id) {
 
 my $url = $HOST.$subresource.$last."?verbosity=$verbosity".$additionals;
 if ($webkey) {
-  $url .= "&webkey=".$webkey;
+  $url .= "&auth=".$webkey;
 }
 my $ua = LWP::UserAgent->new;
 if ($token) {
