@@ -125,4 +125,7 @@ my $ua = LWP::UserAgent->new;
 if ($token) {
   $ua->default_header('user_auth' => $token);
 }
+if (exists $ENV{'KB_AUTH_TOKEN'}) {
+  $ua->default_header('user_auth' => $ENV{'KB_AUTH_TOKEN'});
+}
 print $ua->get($url)->content;
